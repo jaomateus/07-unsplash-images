@@ -5,10 +5,9 @@ import ThemeToggle from "./ThemeToggle";
 const App = () => {
 	return (
 		<>
-			<h1>Unsplash Images Starter</h1>
+			<ThemeToggle />
 			<SearchForm />
 			<Gallery />
-			<ThemeToggle />
 		</>
 	);
 };
