@@ -2,8 +2,15 @@ import { useContext, createContext, useEffect, useState } from "react";
 
 const AppContext = createContext();
 
+const getInitialDarkMode = () => {
+	const prefersDarkMode = window.matchMedia(
+		"(prefers-color-schema:dark)",
+	).matches;
+	return prefersDarkMode;
+};
+
 export const AppProvider = ({ children }) => {
-	const [isDarkTheme, setIsDarkTheme] = useState(false);
+	const [isDarkTheme, setIsDarkTheme] = useState(getInitialDarkMode());
 	const [searchTerm, setSearchTerm] = useState("cat");
 
 	const toggleDarkTheme = () => {
@@ -11,8 +18,11 @@ export const AppProvider = ({ children }) => {
 		setIsDarkTheme(newDarkTheme);
 
 		const body = document.querySelector("body");
-		body.classList.toggle("dark-theme", newDarkTheme);
 	};
+
+	useEffect(()=>{
+		document.body.classList.toggle("dark-theme", isDarkTheme);
+	},[isDarkTheme])
 
 	return (
 		<AppContext.Provider
